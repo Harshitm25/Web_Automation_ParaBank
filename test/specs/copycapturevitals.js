@@ -1,13 +1,16 @@
 //const expect = require('chai').expect;
+const loginPage=require( "../pageobjects/login.page");
+const captureVitals=require('../pageobjects/copycapturevitals.page');
+const copycapturevitalsPage = require("../pageobjects/copycapturevitals.page");
 describe("My Login application", () => {
     let searchId;
     it("it shoudl login page",async()=>
     {
-        await browser.url("https://demo.openmrs.org/openmrs/login.htm");
-        await $("#username").setValue("dhoni");
-        await $("#password").setValue("Msdhoni11");
-        await $("#Pharmacy").click();
-        await $("#loginButton").click();
+        await browser.url("/");
+        await loginPage.inputUsername.setValue("dhoni");
+        await loginPage.inputPassword.setValue("Msdhoni13");
+        await loginPage.pharmacyBtn.click();
+        await loginPage.btnSubmit.click();
         // const pageTitle=await browser.getTitle();
         await expect(browser).toHaveTitle('Home'); 
     })
@@ -46,12 +49,12 @@ describe("My Login application", () => {
 
     it("record id and start visiting workflow",async()=>
     {
-        searchId=await $('//*[@id="content"]/div[6]/div[2]/div/span').getText();
+        searchId=await copycapturevitalsPage.captureId.getText();
       //  console.log('my seraching text is : ',searchIdText);
-        await $('//*[@id="org.openmrs.module.coreapps.createVisit"]/div/div[2]').click();
-        await $('#start-visit-with-visittype-confirm').click();
+        await copycapturevitalsPage.startVisitBtn.click();
+        await copycapturevitalsPage.confitmVisitBtn.click();
         await browser.pause(3000)
-        let endVisitBtn= await $('//*[@id="visit-details"]/div[2]/a[1]');
+        let endVisitBtn= await copycapturevitalsPage.endVisitBtn;
         await expect(endVisitBtn).toBeExisting();
         await browser.pause(3000)
         //visiting back to home page
@@ -69,11 +72,11 @@ describe("My Login application", () => {
 
 
     it("should navigate to the Capture Vitals page", async () => {
-        await $('#breadcrumbs > li:nth-child(1) > a > i').click();
+        await copycapturevitalsPage.backBtn.click();
         // Click on "Capture Vitals" tab
         await browser.pause(5000)
-        await $("#referenceapplication-vitals-referenceapplication-vitals-extension").click();
-        const getTextOfLandingPage = await $('#content > h2');
+        await captureVitals.captureVitalBtn.click();
+        let getTextOfLandingPage =  copycapturevitalsPage.textofPage;
         //console.log("The text is", getTextOfLandingPage);
         await expect(getTextOfLandingPage).toHaveText('Capture Vitals for Patient');
         // Add assertions to verify navigation if needed
@@ -82,18 +85,18 @@ describe("My Login application", () => {
     it("should search for id and capture vitals", async () => {
         //let searchIdText=await $('//*[@id="content"]/div[6]/div[2]/div/span').getText();
 
-        await $("#patient-search").setValue(searchId);
+        await copycapturevitalsPage.patientSearchBtn.setValue(searchId);
             await browser.pause(5000);
 
             // Click the first search result
-            await $('//*[@id="patient-search-results-table"]/tbody/tr/td[1]').click();
+            await copycapturevitalsPage.firstSearchResult.click();
             await browser.pause(5000);
-            await $('.icon-arrow-right').click();
-            await $('//*[@id="w8"]').setValue(12);
-            await $("#next-button").click();
-            await $('//*[@id="w10"]').setValue(66);
-            await $('//*[@id="formBreadcrumb"]/li[2]/span').click();
-            await $('//*[@id="confirmationQuestion"]/p[1]/button').click();
+            await copycapturevitalsPage.iconRightArrowBtn.click();
+            await copycapturevitalsPage.fillMonthBtn.setValue(12);
+            await copycapturevitalsPage.nextBtn.click();
+            await copycapturevitalsPage.fillYearBtn.setValue(66);
+            await copycapturevitalsPage.submitBtn.click();
+            await copycapturevitalsPage.confirmSubmitBtn.click();
             await browser.pause(5000);
 
     })
