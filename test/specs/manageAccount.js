@@ -1,22 +1,25 @@
 const expect = require('chai').expect;
+const ManageAccount=require('../pageobjects/manageAccounts.page')
+const loginPage=require('../pageobjects/login.page');
+//const manageAccountsPage = require('../pageobjects/manageAccounts.page');
 describe('Manage accounts in System administration',()=>
 {
     let familyName;
     let givenName;
-    it('should able to login page  ', async()=>{
+    it('should visit to login page  ', async()=>{
         await browser.url('/');
         const title = await browser.getTitle();
         expect(title).to.equal('Login');
         //await expect(browser).toHaveTitle('Login');
        
     })
-    it("should visit after login",async()=>
+    it("should login and visit login page",async()=>
     {
         await browser.url('/');
-        await $("#username").setValue("admin");
-        await $("#password").setValue("Admin123");
-        await $("#Pharmacy").click();
-        await $("#loginButton").click();
+        await loginPage.inputUsername.setValue("admin");
+        await loginPage.inputPassword.setValue("Admin123");
+        await loginPage.pharmacyBtn.click();
+        await loginPage.btnSubmit.click();
         // await browser.pause(3000);
         const titleOfHome=await browser.getTitle();
         expect (titleOfHome).to.equal('Home');
@@ -24,14 +27,14 @@ describe('Manage accounts in System administration',()=>
     it("able to click on system adminsitration",async()=>
     {
       
-       const BtnSystemAdmin= await $('#coreapps-systemadministration-homepageLink-coreapps-systemadministration-homepageLink-extension')
+       const BtnSystemAdmin= await ManageAccount.systemBtn;
        expect (await BtnSystemAdmin.isClickable()).to.be.true;
        await BtnSystemAdmin.click();
-       await $('#org-openmrs-module-adminui-accounts-app').click();
+       await ManageAccount.manageBtn.click();
     })
     it("should visit to the manage account page and click button",async()=>
     {
-        const addAccountBtn=await $('#content > a');
+        const addAccountBtn=await ManageAccount.accntBtnExist;
          expect(await addAccountBtn.isExisting()).to.be.true;
         await addAccountBtn.click();
     })
@@ -40,31 +43,31 @@ describe('Manage accounts in System administration',()=>
     {
         familyName='Don21';
         givenName='chandu31';
-        await $('#adminui-familyName-field').setValue(familyName);
-        await $('#adminui-givenName-field').setValue(givenName);
-        await $('#adminui-gender-0-field').click();
+        await ManageAccount.familyNameBtn.setValue(familyName);
+        await ManageAccount.givenNameBtn.setValue(givenName);
+        await ManageAccount.nextClick.click();
 
     });
 
     it("filling account details",async()=>
     {
         
-        let addUserAcntBtn=await $('#adminui-addUserAccount');
+        let addUserAcntBtn=await ManageAccount.addUserAcntBtn;
         expect (await addUserAcntBtn.isClickable()).to.be.true;
         await addUserAcntBtn.click();
-        let username=await $('#adminui-username-field');
-        await username.setValue('don12345');
-        let selectElement = await $('#adminui-privilegeLevel-field');
+        let username=await ManageAccount.userNameBtn;
+        await username.setValue('don1234567');                                   //change
+        let selectElement = await ManageAccount.selectBtn;
         await selectElement.selectByVisibleText('Full');
-        await $('#adminui-password-field').setValue('Donchandu123456');
-        await $('#adminui-confirmPassword-field').setValue('Donchandu123456');
+        await ManageAccount.newPassBtn.setValue('Donchandu12345678');          //change
+        await ManageAccount.confmPassBtn.setValue('Donchandu12345678');         //change
         // await $('#adminui-confirmPassword-field').setValue('Msdhoni7');
         await $('#adminui-forceChangePassword').click();
     })
            
     it("checking all capabilities",async()=>
     {
-        let administrativeCapabilitescheck = await $('//*[@id="adminui-capabilities-Application: Administers System"]');
+        let administrativeCapabilitescheck = await ManageAccount.capabiltyCheck;
         expect(await administrativeCapabilitescheck.isClickable()).to.be.true;
         await administrativeCapabilitescheck.click();
         await $('//*[@id="adminui-capabilities-Application: Configures Forms"]').click();
@@ -105,11 +108,11 @@ describe('Manage accounts in System administration',()=>
     })
            it("filling provider details",async()=>
            {
-            await $('#adminui-addProviderAccount').click();
-            await $('#adminui-identifier-field').setValue('abcdef1234');
-             let selectproviderRole=await $('#adminui-providerRole-field');
+            await ManageAccount.addProviderBtn.click();
+            await ManageAccount.setValueForAddBtn.setValue('abcdef123456');   //change
+             let selectproviderRole=await ManageAccount.providerRoleBtn;
              await selectproviderRole.selectByVisibleText('Clerk')
-             await $('#save-button').click();
+             await ManageAccount.saveBtn.click();
              await browser.pause(5000)
 
            })
@@ -117,9 +120,10 @@ describe('Manage accounts in System administration',()=>
            it("searching the result",async()=>
            {
             let searchGivenFamilyname=givenName+" "+familyName;
-            await $('//*[@id="list-accounts_filter"]/label/input').setValue(searchGivenFamilyname);
-             let serachBarResult= await $('//*[@id="list-accounts"]/tbody/tr/td[1]').getText();
+            await ManageAccount.searchName.setValue(searchGivenFamilyname);
+             let serachBarResult= await ManageAccount.searchbarResult.getText();
              expect (serachBarResult).to.equal(searchGivenFamilyname)
+             await browser.pause(5000);
            })
           
 
