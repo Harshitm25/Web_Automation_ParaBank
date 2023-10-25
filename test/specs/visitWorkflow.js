@@ -1,4 +1,3 @@
-//const { expect } = require("chai");
 const loginPage=require( "../pageobjects/login.page");
 const visitWorkFlow=require('../pageobjects/visitworkflow.page')
 describe('changing password',()=>
@@ -21,7 +20,6 @@ describe('changing password',()=>
 
         await browser.keys(['h', 'a', 'r', 's']);
         await browser.pause(4000)
-        //await $('.required focused ui-autocomplete-input error').setValue('harshit');
         await visitWorkFlow.nextBtn.click();
         await visitWorkFlow.genderBtn.click();
         await visitWorkFlow.nextBtn.click();
@@ -30,14 +28,9 @@ describe('changing password',()=>
         await visitWorkFlow.nextBtn.click();
         await visitWorkFlow.addressBtn.setValue('abc');
         await visitWorkFlow.nextBtn.click();
-        //await $('//*[@id="fr1132-field"]').setValue('012');
          await visitWorkFlow.nextBtn.click();
         await visitWorkFlow.nextBtn.click();
        
-
-        // await browser.keys(['']);
-        // await browser.keys(['Enter']);
-
         await visitWorkFlow.submitBtn.click();
 
         await browser.pause(5000)

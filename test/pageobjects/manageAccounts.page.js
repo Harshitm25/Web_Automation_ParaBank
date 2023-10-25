@@ -52,7 +52,7 @@ class ManageAccount{
         return $('#adminui-confirmPassword-field')
     }
 
-    get capabiltyCheck()
+    get capabilityCheck()
     {
         return $('//*[@id="adminui-capabilities-Application: Administers System"]')
     }
@@ -81,7 +81,7 @@ class ManageAccount{
         return $('//*[@id="list-accounts_filter"]/label/input')
     }
 
-    get searchbarResult()
+    get searchBarResult()
     {
         return $('//*[@id="list-accounts"]/tbody/tr/td[1]')
     }

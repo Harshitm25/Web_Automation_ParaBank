@@ -22,7 +22,7 @@ class captureVitals{
     {
         return $('//*[@id="org.openmrs.module.coreapps.createVisit"]/div/div[2]')
     }
-    get confitmVisitBtn()
+    get confirmVisitBtn()
     {
         return $('#start-visit-with-visittype-confirm');
     }

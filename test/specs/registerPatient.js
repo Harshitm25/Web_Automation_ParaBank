@@ -18,7 +18,6 @@ describe('changing password',()=>
 
         await browser.keys(['h', 'a', 'r', 's']);
         await browser.pause(4000)
-        //await $('.required focused ui-autocomplete-input error').setValue('harshit');
         await $('#next-button').click();
         await $('//*[@id="gender-field"]/option[1]').click();
         await $('#next-button').click();
@@ -27,13 +26,9 @@ describe('changing password',()=>
         await $('#next-button').click();
         await $('#address1').setValue('abc');
         await $('#next-button').click();
-        //await $('//*[@id="fr1132-field"]').setValue('012');
          await $('#next-button').click();
         await $('#next-button').click();
-       
-
-        // await browser.keys(['']);
-        // await browser.keys(['Enter']);
+    
 
         await $('#submit').click();
 

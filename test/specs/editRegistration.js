@@ -22,7 +22,6 @@ describe('edit registration',()=>
 
         await browser.keys(['h', 'a', 'r', 's']);
         await browser.pause(4000)
-        //await $('.required focused ui-autocomplete-input error').setValue('harshit');
         await VisitWorkflow.nextBtn.click();
         await VisitWorkflow.genderBtn.click();
         await VisitWorkflow.nextBtn.click();
@@ -31,13 +30,11 @@ describe('edit registration',()=>
         await VisitWorkflow.nextBtn.click();
         await VisitWorkflow.addressBtn.setValue('abc');
         await VisitWorkflow.nextBtn.click();
-        //await $('//*[@id="fr1132-field"]').setValue('012');
          await VisitWorkflow.nextBtn.click();
         await VisitWorkflow.nextBtn.click();
        
 
-        // await browser.keys(['']);
-        // await browser.keys(['Enter']);
+       
 
         await VisitWorkflow.submitBtn.click();
 
